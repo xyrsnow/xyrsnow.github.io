@@ -4,12 +4,14 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>new post | Hexo</title>
+    <title>Hexo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="John Doe">
     
-    <meta name="description" content="nihao">
+    <meta name="description" content="title:单例模式date: 2014-11-06 23:11:05tags:   
+
+单例模式顾名思义就是只有一个实例，它确保一个类只有一个实例，并且自行实例化并向整个系统提供这个实例。它经常用来做应用程序级别的共享资源控制。这个模式使用频率非常高，通过一个单例类，可以实现在不同窗口之间传递数据">
     
     
     
@@ -70,14 +72,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/11/06/new-post/" title="new post" itemprop="url">new post</a>
+      <a href="/2014/11/06/new-post/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://yoursite.com/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
 		
   <p class="article-time">
-    <time datetime="2014-11-06T15:11:05.000Z" itemprop="datePublished"> Published Nov 6 2014</time>
+    <time datetime="2014-11-06T15:50:50.000Z" itemprop="datePublished"> Published Nov 6 2014</time>
     
   </p>
 </header>
@@ -91,7 +93,19 @@
 		
 		</div>
 		
-		<p>nihao</p>
+		<p>title:单例模式<br>date: 2014-11-06 23:11:05<br>tags:   </p>
+<hr>
+<p>单例模式顾名思义就是只有一个实例，它确保一个类只有一个实例，并且自行实例化并向整个系统提供这个实例。它经常用来做应用程序级别的共享资源控制。这个模式使用频率非常高，通过一个单例类，可以实现在不同窗口之间传递数据。</p>
+<p>在objective-c中要实现一个单例类，至少需要做以下四个步骤：</p>
+<p>1、为单例对象实现一个静态实例，并初始化，然后设置成nil，</p>
+<p>2、实现一个实例构造方法检查上面声明的静态实例是否为nil，如果是则新建并返回一个本类的实例，</p>
+<p>3、重写allocWithZone方法，用来保证其他人直接使用alloc和init试图获得一个新实例的时候不产生一个新实例，</p>
+<p>4、适当实现allocWitheZone，copyWithZone，release和autorelease</p>
+<p>例子：为RootViewController创建一个单例函数：</p>
+<p>static RootViewController *shareRootViewController = nil;</p>
+<p>+(RootViewController *)sharedController{<br>        @synchronized(self){<br>                if(shareRootViewController == nil){<br>                        shareRootViewController = [[[self alloc] init] autorelease];<br>                }<br>        }<br>        return shareRootViewController;<br>}</p>
+<p>+(id)allocWithZone:(NSZone *)zone{<br>        @synchronized(self){<br>                if (shareRootViewController == nil) {<br>                   shareRootViewController = [super allocWithZone:zone];<br>                    return  shareRootViewController;<br>                }<br>            }<br>        return nil;<br>}</p>
+<p>NSZone： 简单来说可以把它想象成一个内存池，alloc或者dealloc这些操作都是在这个内存池中操作的，cocoa总是会分配一个默认的nsZone，任何 默认内存操作都是在这个zone上进行的，使用默认zone存在缺陷，因为他是全局范围的，频繁使用会导致内存的碎片化，尤其是大量的alloc和 dealloc的时候，性能上会受到一定影响。因为你完全可以自己生成一个zone并将alloc，copy这些限制在这个zone中。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -103,7 +117,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2014/11/06/new-post/" data-title="new post | Hexo" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2014/11/06/new-post/" data-title="Hexo" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
